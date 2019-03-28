@@ -1,0 +1,21 @@
+{
+  "usingComponents": {
+    "wxc-toast": "../../dist/packages/@minui/wxc-toast/dist/index",
+    "wxc-icon": "../../dist/packages/@minui/wxc-icon/dist/index",
+    "wxc-button": "../../dist/packages/@minui/wxc-button/dist/index",
+    "wxc-abnor": "../../dist/packages/@minui/wxc-abnor/dist/index",
+    "wxc-panel": "../../dist/packages/@minui/wxc-panel/dist/index"
+  },
+  "pages": [
+    "pages/index/index",
+    "pages/wx/wx",
+    "pages/nulldata/nulldata",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  }
+}
