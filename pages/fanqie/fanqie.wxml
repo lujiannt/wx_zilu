@@ -1,24 +1,20 @@
-<!--index.wxml-->
-<!-- <view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}sakdjsak</text>
-    </block>
+<view class="page">
+  <view class="page__hd">
+    <view class="page__title"></view>
+    <view class="page__desc">nihao</view>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view> -->
 
- <view class="container">
-     <view class='progress_box'>
-        <canvas class="progress_bg"   canvas-id="canvasProgressbg">  </canvas> 
-        <canvas class="progress_canvas"   canvas-id="canvasProgress">  </canvas> 
-        <view class="progress_text">
-            <view class="progress_dot"></view> 
-            <text class='progress_info'> {{progress_txt}}</text>
-        </view>     
+  <view class="page__bd page__bd_spacing">
+    <view class="timeView">
+      <canvas class="progress_bg" canvas-id="canvasProgressbg"> </canvas>
+      <canvas class="progress_canvas" canvas-id="canvasProgress"> </canvas>
+      <view class="progress_text">
+        <view class="progress_dot"></view>
+        <text class='progress_info'> {{progress_txt}}</text>
+      </view>
     </view>
+    <view class="button-sp-area">
+      <button class="btn1" hover-class='hover_btn1' bindtap='toZhuanZhu'>开始           </button>
+    </view>
+  </view>
 </view>
-<!-- </view> -->

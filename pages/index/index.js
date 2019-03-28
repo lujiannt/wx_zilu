@@ -13,16 +13,18 @@ Page({
     ],
     pic: '../../style/img/3.jpg',
     pics: [
-      '../../style/img/1.jpg',
-      '../../style/img/1.jpg',
-      '../../style/img/1.jpg',
+      '../../style/img/3.jpg',
+      '../../style/img/3.jpg',
+      '../../style/img/3.jpg',
     ]
   },
+  //跳转到专注页面
   toZhuanZhu: function() {
     wx.navigateTo({
       url: '../fanqie/fanqie'
     })
   },
+  //首页加载
   onLoad: function() {
     var self = this;
     var index_juzi = 0;

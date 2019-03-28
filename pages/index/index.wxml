@@ -9,7 +9,7 @@
       <image mode="widthFix" style="width:100%" src="{{pic}}"/>
     </view>
     <view class="button-sp-area">
-      <button class="btn1" hover-class='hover_btn1'>开始专注</button>
+      <button class="btn1" hover-class='hover_btn1' bindtap='toZhuanZhu'>开始专注</button>
     </view>
   </view>
 </view>
