@@ -4,7 +4,9 @@ const app = getApp()
 
 Page({
   data: {
-    progress_txt: '正在匹配中...',  
+    clickFlag: false, //开始番茄的标识，防止重复点击
+    countTime: '00:60', //番茄倒计时
+    timeLong: 25, //番茄时长（单位：分钟）
     count: 0, // 设置 计数器 初始为0
     countTimer: null // 设置 定时器 初始为null
   },
@@ -14,26 +16,25 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
-  },
-  drawProgressbg: function () {
+  onLoad: function() {},
+  drawProgressbg: function() {
     // 使用 wx.createContext 获取绘图上下文 context
     var ctx = wx.createCanvasContext('canvasProgressbg')
-    ctx.setLineWidth(4);// 设置圆环的宽度
+    ctx.setLineWidth(4); // 设置圆环的宽度
     ctx.setStrokeStyle('#DCDCDC'); // 设置圆环的颜色
     ctx.setLineCap('round') // 设置圆环端点的形状
-    ctx.beginPath();//开始一个新的路径
+    ctx.beginPath(); //开始一个新的路径
     ctx.arc(110, 110, 100, 0, 2 * Math.PI, false);
     //设置一个原点(110,110)，半径为100的圆的路径到当前路径
-    ctx.stroke();//对当前路径进行描边
+    ctx.stroke(); //对当前路径进行描边
     ctx.draw();
   },
-  drawCircle: function (step) {
+  drawCircle: function(step) {
     var context = wx.createCanvasContext('canvasProgress');
     // 设置渐变
     var gradient = context.createLinearGradient(200, 100, 100, 200);
     // gradient.addColorStop("0", "#CD5C5C");
-    
+
     // gradient.addColorStop("0.5", "#fa8072");
     // gradient.addColorStop("1.0", "#F08080");
 
@@ -51,7 +52,7 @@ Page({
     context.draw()
   },
   //番茄倒计时
-  countInterval: function () {
+  countInterval: function() {
     // 设置倒计时 定时器 每1000毫秒执行一次，计数器count+1 
     this.countTimer = setInterval(() => {
       if (this.data.count <= 60) {
@@ -62,16 +63,60 @@ Page({
         this.drawCircle(this.data.count / (60 / 2))
         this.data.count++;
       } else {
-        this.setData({
-          progress_txt: "匹配成功"
-        });
         clearInterval(this.countTimer);
       }
-    }, 100)
+    }, 1000)
   },
-  onReady: function () {
+  onReady: function() {
     this.drawProgressbg();
     // this.drawCircle(2) 
-    this.countInterval()
+    // this.countInterval()
   },
+  //开始番茄计时
+  startFanQie: function() {
+    var self = this;
+    if(self.data.clickFlag == false) {
+      self.setData({
+        clickFlag: true,
+      });
+
+      var start = new Date();
+
+      //终止时间
+      var end_time = parseInt(Date.parse(start) / 1000) - 0 + self.data.timeLong * 60;
+      this.countTimer = setInterval(() => {
+        var now = new Date();
+        var curr_time = parseInt(Date.parse(now) / 1000);
+        var diff_time = parseInt(end_time - curr_time); // 倒计时时间差
+        var m = Math.floor((diff_time / 60 % 60));
+        var s = Math.floor((diff_time % 60));
+        console.log("diff_time" + diff_time);
+        if (diff_time <= 0) {
+          self.setData({
+            clickFlag: false,
+            countTime: "00:00",
+            count: "0"
+          });
+
+          clearInterval(this.countTimer);
+        } else {
+          if (m < 10) {
+            m = "0" + m;
+          }
+          if (s < 10) {
+            s = "0" + s;
+          }
+          self.setData({
+            countTime: m + ":" + s,
+            count: self.data.count++
+          });
+
+          var seconds = self.data.timeLong * 60;
+          this.drawCircle(self.data.count / (seconds / 2));
+        }
+      }, 1000)
+    }
+    
+    
+  }
 })

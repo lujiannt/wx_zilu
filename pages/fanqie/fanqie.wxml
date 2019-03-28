@@ -1,7 +1,7 @@
 <view class="page">
   <view class="page__hd">
     <view class="page__title"></view>
-    <view class="page__desc">nihao</view>
+    <view class="page__desc textCenter">让我们开始专注一个番茄钟吧</view>
   </view>
 
   <view class="page__bd page__bd_spacing">
@@ -10,11 +10,11 @@
       <canvas class="progress_canvas" canvas-id="canvasProgress"> </canvas>
       <view class="progress_text">
         <view class="progress_dot"></view>
-        <text class='progress_info'> {{progress_txt}}</text>
+        <text class='progress_info'>{{countTime}}</text>
       </view>
     </view>
     <view class="button-sp-area">
-      <button class="btn1" hover-class='hover_btn1' bindtap='toZhuanZhu'>开始           </button>
+      <button class="btn1" hover-class='hover_btn1' bindtap='startFanQie'>开始           </button>
     </view>
   </view>
 </view>

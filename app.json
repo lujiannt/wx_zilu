@@ -7,8 +7,9 @@
     "wxc-panel": "../../dist/packages/@minui/wxc-panel/dist/index"
   },
   "pages": [
-    "pages/fanqie/fanqie",
     "pages/index/index",
+    "pages/fanqie/fanqie",
+   
     "pages/wx/wx",
     "pages/nulldata/nulldata",
     "pages/logs/logs"
