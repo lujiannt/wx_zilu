@@ -5,7 +5,7 @@ const app = getApp()
 Page({
   data: {
     clickFlag: false, //开始番茄的标识，防止重复点击
-    countTime: null, //番茄倒计时
+    countTime: "", //番茄倒计时
     aim: null,
     defaultAim: "让我们开始专注一个番茄钟吧",
     timeLong: 25, //番茄时长（单位：分钟）
@@ -92,17 +92,21 @@ Page({
         var diff_time = parseInt(end_time - curr_time); // 倒计时时间差
         var m = Math.floor((diff_time / 60 % 60));
         var s = Math.floor((diff_time % 60));
-        console.log("diff_time" + diff_time);
+        console.log("diff_time : " + diff_time);
         if (diff_time <= 0) {
           self.setData({
             defaultAim: "让我们开始专注一个番茄钟吧",
             aim: null,
-            clickFlag: false,
             countTime: "00:00",
-            count: "0"
+            count: 0
           });
 
           clearInterval(this.countTimer);
+
+          self.setData({
+            clickFlag: false,
+            countTime: null,
+          });
         } else {
           if (m < 10) {
             m = "0" + m;
@@ -110,12 +114,15 @@ Page({
           if (s < 10) {
             s = "0" + s;
           }
+          var newCount = self.data.count + 1;
           self.setData({
             countTime: m + ":" + s,
-            count: self.data.count++
+            count: newCount
           });
 
           var seconds = self.data.timeLong * 60;
+          console.log("count : " + self.data.count);
+          console.log("seconds : " + seconds);
           this.drawCircle(self.data.count / (seconds / 2));
         }
       }, 1000)
@@ -134,5 +141,13 @@ Page({
       aim: aim
     });
     console.log("aim : " + this.data.aim);
+  },
+  //改变番茄时长
+  changeTimeLong(e) {
+    console.log('slider发生 change 事件，携带值为', e.detail.value);
+    var self = this;
+    self.setData({
+      timeLong: e.detail.value
+    });
   }
 })

@@ -1,35 +1,33 @@
 <view class="page">
+  <!-- 目标/标语 -->
   <view class="page__hd">
     <view class="page__title"></view>
     <view class="page__desc textCenter">{{defaultAim}}</view>
   </view>
 
-  <!-- <view class="weui-cells weui-cells_after-title myinput">
-    <view class="weui-cell weui-cell_input">
-      <view class="weui-cell__hd">
-          <view class="weui-label">qq</view>
-      </view>
-      <view class="weui-cell__bd">
-          <input class="weui-input" placeholder="请输入qq"/>
-      </view>
-    </view>
-  </view> -->
-
-  <!-- <wxc-input type="text" mode="normal" placeholder-style="font-size:17px" placeholder="请输入收货人姓名"></wxc-input> -->
-
   <view class="page__bd page__bd_spacing">
+     <!-- 番茄倒计时 -->
     <view class="timeView">
       <canvas class="progress_bg" canvas-id="canvasProgressbg"></canvas>
       <canvas class="progress_canvas" canvas-id="canvasProgress"> </canvas>
       <view class="progress_text">
         <view class="progress_dot"></view>
-        <text class='progress_info' wx:if="{{countTime != null}}">{{countTime}}</text>
+        <text class='progress_info' wx:if="{{clickFlag == true}}">{{countTime}}</text>
 
-        <wxc-input  wx:if="{{clickFlag != true}}" type="text" mode="normal" style="font-size:16px;text-align: center" placeholder-style="font-size:16px;text-align: center" placeholder="本次专注的目标" bind:blur="onBlur" value="{{aim}}"/>
+        <wxc-input  wx:if="{{clickFlag != true}}" type="text" mode="normal" style="font-size:16px;text-align: center"         placeholder-style="font-size:16px;text-align: center" placeholder="输入本次专注的目标" bind:blur="onBlur" value="{{aim}}"/>
       </view>
     </view>
+
+    <!-- 番茄时长slider -->
+    <view class="page__desc mini_title" wx:if="{{clickFlag != true}}">设置时长分钟：</view>
+    <view class="body-view textCenter">
+        <slider wx:if="{{clickFlag != true}}" show-value value="25" step="5" min="5" max="60" block-color="#fa8072"        activeColor="#fa8072" bindchange="changeTimeLong"/>
+    </view>
+
+
+    <!-- 开始与放弃 -->
     <view class="button-sp-area">
-      <button class="btn1" hover-class='hover_btn1' bindtap='startFanQie'>开始           </button>
+      <button wx:if="{{clickFlag != true}}" class="btn1" hover-class='hover_btn1' bindtap='startFanQie'>开始</button>
     </view>
   </view>
 </view>

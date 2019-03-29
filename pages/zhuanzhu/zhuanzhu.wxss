@@ -95,6 +95,12 @@
   text-align: center;
 }
 
+.mini_title {
+  margin-top: 5px;
+  font-size: 12px;
+  padding-left: 35rpx;
+}
+
 .myinput {
  margin-bottom: 15px;
 }
