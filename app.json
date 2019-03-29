@@ -4,9 +4,11 @@
     "wxc-icon": "../../dist/packages/@minui/wxc-icon/dist/index",
     "wxc-button": "../../dist/packages/@minui/wxc-button/dist/index",
     "wxc-abnor": "../../dist/packages/@minui/wxc-abnor/dist/index",
+    "wxc-input": "../../dist/packages/@minui/wxc-input/dist/index",
     "wxc-panel": "../../dist/packages/@minui/wxc-panel/dist/index"
   },
   "pages": [
+    "pages/zhuanzhu/zhuanzhu",
     "pages/index/index",
     "pages/fanqie/fanqie",
    

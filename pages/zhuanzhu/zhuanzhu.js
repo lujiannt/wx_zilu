@@ -5,10 +5,12 @@ const app = getApp()
 Page({
   data: {
     clickFlag: false, //开始番茄的标识，防止重复点击
-    countTime: '25:00', //番茄倒计时
+    countTime: null, //番茄倒计时
+    aim: null,
+    defaultAim: "让我们开始专注一个番茄钟吧",
     timeLong: 25, //番茄时长（单位：分钟）
     count: 0, // 设置 计数器 初始为0
-    countTimer: null // 设置 定时器 初始为null
+    countTimer: null, // 设置 定时器 初始为null
   },
   //事件处理函数
   bindViewTap: function() {
@@ -75,7 +77,7 @@ Page({
   //开始番茄计时
   startFanQie: function() {
     var self = this;
-    if(self.data.clickFlag == false) {
+    if (self.data.clickFlag == false) {
       self.setData({
         clickFlag: true,
       });
@@ -93,6 +95,8 @@ Page({
         console.log("diff_time" + diff_time);
         if (diff_time <= 0) {
           self.setData({
+            defaultAim: "让我们开始专注一个番茄钟吧",
+            aim: null,
             clickFlag: false,
             countTime: "00:00",
             count: "0"
@@ -116,7 +120,19 @@ Page({
         }
       }, 1000)
     }
-    
-    
+
+
+  },
+  //输入完目标，失去焦点触发
+  onBlur: function(e) {
+    var self = this;
+    let aim = e.detail.value;
+    console.log("aim : " + aim);
+
+    self.setData({
+      defaultAim: aim,
+      aim: aim
+    });
+    console.log("aim : " + this.data.aim);
   }
 })

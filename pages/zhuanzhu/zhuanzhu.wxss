@@ -1,0 +1,100 @@
+/**index.wxss**/
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.usermotto {
+  margin-top: 200px;
+}
+
+.progress_box {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+}
+
+.progress_bg {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+}
+
+.progress_canvas {
+  width: 220px;
+  height: 220px;
+}
+
+.progress_text {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress_info {
+  font-size: 70rpx;
+  padding-left: 16rpx;
+  letter-spacing: 2rpx;
+  color: #fa8072;
+}
+
+.progress_dot {
+  width: 0rpx;
+  height: 0rpx;
+  border-radius: 50%;
+  background-color: #fa8072;
+}
+
+.button-sp-area {
+  margin: 0 auto;
+  padding-top: 45px;
+  width: 60%;
+}
+
+.mini-btn {
+  margin-right: 5px;
+}
+
+.btn1 {
+  background-color: #fa8072;
+  color: #fff;
+  border-radius: 98rpx;
+}
+
+.hover_btn1 {
+  background-color: #e9967a;
+}
+
+.timeView {
+  display: flex; /*设置显示样式**/
+  align-items: center; /**子view垂直居中*/
+  vertical-align: center; /**垂直居中*/
+  justify-content: center; /**内容居中*/
+  flex-direction: row;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.myinput {
+ margin-bottom: 15px;
+}
