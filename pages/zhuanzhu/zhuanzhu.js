@@ -11,6 +11,7 @@ Page({
     timeLong: 25, //番茄时长（单位：分钟）
     count: 0, // 设置 计数器 初始为0
     countTimer: null, // 设置 定时器 初始为null
+    testImgUrl: null,
   },
   //事件处理函数
   bindViewTap: function() {
@@ -77,6 +78,10 @@ Page({
   //开始番茄计时
   startFanQie: function() {
     var self = this;
+    
+   
+
+
     if (self.data.clickFlag == false) {
       self.setData({
         clickFlag: true,
@@ -86,7 +91,7 @@ Page({
 
       //终止时间
       var end_time = parseInt(Date.parse(start) / 1000) - 0 + self.data.timeLong * 60;
-      this.countTimer = setInterval(() => {
+      self.data.countTimer = setInterval(() => {
         var now = new Date();
         var curr_time = parseInt(Date.parse(now) / 1000);
         var diff_time = parseInt(end_time - curr_time); // 倒计时时间差
@@ -94,6 +99,35 @@ Page({
         var s = Math.floor((diff_time % 60));
         console.log("diff_time : " + diff_time);
         if (diff_time <= 0) {
+          //初始化云平台
+          wx.cloud.init({
+            env: 'test-b8c946'
+          });
+
+          //播放停止提示音
+          const innerAudioContext = wx.createInnerAudioContext();
+          innerAudioContext.src = "cloud://test-b8c946.7465-test-b8c946/audio/d.mp3";
+          innerAudioContext.autoplay = true;
+          innerAudioContext.play();
+          innerAudioContext.onPlay(() => {
+            console.log('开始播放')
+          })
+          innerAudioContext.onError((res) => {
+            console.log(res.errMsg)
+            console.log(res.errCode)
+          })
+
+          //重置画布
+          var ctx = wx.createCanvasContext('canvasProgress');
+          ctx.setLineWidth(4); 
+          ctx.setStrokeStyle('#DCDCDC'); 
+          ctx.setLineCap('round');
+          ctx.beginPath(); 
+          ctx.arc(110, 110, 100, 0, 2 * Math.PI, false);
+          ctx.stroke(); 
+          ctx.draw();
+
+          //重置相关数据
           self.setData({
             defaultAim: "让我们开始专注一个番茄钟吧",
             aim: null,
@@ -101,7 +135,8 @@ Page({
             count: 0
           });
 
-          clearInterval(this.countTimer);
+          //停止计时
+          clearInterval(self.data.countTimer);
 
           self.setData({
             clickFlag: false,
@@ -148,6 +183,48 @@ Page({
     var self = this;
     self.setData({
       timeLong: e.detail.value
+    });
+  },
+  //放弃专注
+  fangqi() {
+    var self = this;
+    wx.showModal({
+      title: '',
+      content: '逆水行舟用力撑， 一篙不慎退千寻。确定要放弃吗？',
+      confirmText: "确定",
+      cancelText: "取消",
+      success: function(res) {
+        console.log(res);
+        if (res.confirm) {
+          console.log('放弃');
+          //清除计时
+          clearInterval(self.data.countTimer);
+
+          //清除进度条画布
+          var ctx = wx.createCanvasContext('canvasProgress');
+          ctx.setLineWidth(4); // 设置圆环的宽度
+          ctx.setStrokeStyle('#DCDCDC'); // 设置圆环的颜色
+          ctx.setLineCap('round') // 设置圆环端点的形状
+          ctx.beginPath(); //开始一个新的路径
+          ctx.arc(110, 110, 100, 0, 2 * Math.PI, false);
+          //设置一个原点(110,110)，半径为100的圆的路径到当前路径
+          ctx.stroke(); //对当前路径进行描边
+          ctx.draw();
+
+          //重置变量
+          self.setData({
+            defaultAim: "让我们开始专注一个番茄钟吧",
+            aim: null,
+            countTime: "00:00",
+            count: 0,
+            timeLong: 25,
+            clickFlag: false,
+            countTimer: null
+          });
+        } else {
+          console.log('取消放弃')
+        }
+      }
     });
   }
 })

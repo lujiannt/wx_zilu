@@ -9,7 +9,7 @@
      <!-- 番茄倒计时 -->
     <view class="timeView">
       <canvas class="progress_bg" canvas-id="canvasProgressbg"></canvas>
-      <canvas class="progress_canvas" canvas-id="canvasProgress"> </canvas>
+      <canvas class="progress_canvas" canvas-id="canvasProgress" wx:show="{{clickFlag == true}}"> </canvas>
       <view class="progress_text">
         <view class="progress_dot"></view>
         <text class='progress_info' wx:if="{{clickFlag == true}}">{{countTime}}</text>
@@ -28,6 +28,9 @@
     <!-- 开始与放弃 -->
     <view class="button-sp-area">
       <button wx:if="{{clickFlag != true}}" class="btn1" hover-class='hover_btn1' bindtap='startFanQie'>开始</button>
+      <button wx:if="{{clickFlag == true}}" class="btn2" hover-class='hover_btn2' bindtap='fangqi'>放弃</button>
     </view>
+
+    <image mode="widthFix" style="width:100%"  src="{{testImgUrl}}"/>
   </view>
 </view>

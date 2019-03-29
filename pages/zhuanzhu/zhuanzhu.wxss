@@ -79,8 +79,18 @@
   border-radius: 98rpx;
 }
 
+.btn2 {
+  background-color: #C0C0C0;
+  color: #fff;
+  border-radius: 98rpx;
+}
+
 .hover_btn1 {
   background-color: #e9967a;
+}
+
+.hover_btn2 {
+  background-color: #D3D3D3;
 }
 
 .timeView {

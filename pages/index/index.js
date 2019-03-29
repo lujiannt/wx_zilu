@@ -21,7 +21,7 @@ Page({
   //跳转到专注页面
   toZhuanZhu: function() {
     wx.navigateTo({
-      url: '../fanqie/fanqie'
+      url: '../zhuanzhu/zhuanzhu'
     })
   },
   //首页加载
