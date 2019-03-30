@@ -242,6 +242,7 @@ Page({
     //重置相关数据
     self.setData({
       clickFlag: false,
+      repeatFlag: false,
       countTime: "",
       count: 0,
     });
