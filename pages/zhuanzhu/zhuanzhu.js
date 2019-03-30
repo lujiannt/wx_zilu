@@ -10,7 +10,8 @@ Page({
     repeatFlag: false, //本次计时完成标识,用来控制是否继续或重置
     countTime: "", //番茄倒计时
     aim: null,
-    defaultAim: "让我们开始专注一个番茄钟吧",
+    defaultAim: "专注", //默认专注标题
+    defaultEncourage: "让我们开始专注一个番茄钟吧", //默认专注鼓励语
     timeLong: 25, //番茄时长（单位：分钟）
     defaultTimeLong: 25, //默认番茄时长
     count: 0, // 设置 计数器 初始为0

@@ -1,8 +1,8 @@
 <view class="page">
   <!-- 目标/标语 -->
   <view class="page__hd">
-    <view class="page__title"></view>
-    <view class="page__desc textCenter">{{defaultAim}}</view>
+    <view class="page__title textCenter">{{defaultAim}}</view>
+    <view class="page__desc textCenter">{{defaultEncourage}}</view>
   </view>
 
   <view class="page__bd page__bd_spacing">
