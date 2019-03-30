@@ -18,6 +18,9 @@ Page({
     mp3CloudId: "cloud://test-b8c946.7465-test-b8c946/audio/d.mp3", //番茄计时结束提示音云id
   },
 
+  /**
+   * 生命周期函数--监听页面加载
+   */
   onLoad: function() {
     //初始化云平台
     wx.cloud.init({
@@ -48,6 +51,10 @@ Page({
       console.log(res.errCode)
     })
   },
+
+  /**
+   * 绘制计时背景圈
+   */
   drawProgressbg: function() {
     // 使用 wx.createContext 获取绘图上下文 context
     var ctx = wx.createCanvasContext('canvasProgressbg')
@@ -61,6 +68,9 @@ Page({
     ctx.draw();
   },
 
+  /**
+   * 绘制进度条
+   */
   drawCircle: function(step) {
     var context = wx.createCanvasContext('canvasProgress');
     // 设置渐变
@@ -84,7 +94,9 @@ Page({
     this.drawProgressbg();
   },
 
-  //开始番茄计时
+  /**
+   * 开始番茄计时
+   */
   startFanQie: function() {
     var self = this;
 
@@ -140,7 +152,9 @@ Page({
     }
   },
 
-  //输入完目标，失去焦点触发
+  /**
+   * 输入完目标，失去焦点触发
+   */
   onBlur: function(e) {
     var self = this;
     let aim = e.detail.value;
@@ -152,7 +166,10 @@ Page({
     });
     console.log("aim : " + this.data.aim);
   },
-  //改变番茄时长
+  
+   /**
+   * 改变番茄时长
+   */
   changeTimeLong(e) {
     console.log('slider发生 change 事件，携带值为', e.detail.value);
     var self = this;
@@ -161,7 +178,9 @@ Page({
     });
   },
 
-  //放弃专注
+  /**
+   * 放弃番茄计时
+   */
   fangqi() {
     var self = this;
     wx.showModal({
@@ -204,7 +223,9 @@ Page({
     });
   },
 
-  //继续
+  /**
+   * 继续执行番茄计时
+   */
   continueFanqie() {
     var self = this;
     //重置画布
@@ -227,7 +248,9 @@ Page({
     this.startFanQie();
   },
 
-  //重置
+  /**
+   * 重置番茄计时
+   */
   resetFanqie() {
     var self = this;
 
