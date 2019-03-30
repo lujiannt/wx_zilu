@@ -28,7 +28,8 @@ Page({
     })
 
     //设置音频路径
-    //【注意】：经过测试如果不在onload中赋予src,而是在下面的方法中赋予，play方法无法播放，只能使用autoplay=true来播放，该方式有巨大的延迟
+    //【注意】：经过测试如果不在onload中赋予src,而是在下面的方法中赋予，play方法无法播放，只能使用autoplay=true来播放（该方式有巨大的延迟）
+    //【注意】：所以推测.src是异步方法，不会堵塞，所以导致音频还在加载，play方法却已经调用所以无法播放，autoplay却有效
     innerAudioContext.src = this.data.mp3CloudId;
     // innerAudioContext.autoplay = true;
 
@@ -105,7 +106,6 @@ Page({
           });
 
           //播放停止提示音
-          
           innerAudioContext.play();
 
           //重置画布
