@@ -2,25 +2,22 @@
 //获取应用实例
 const app = getApp();
 //wx audio音频对象
-const innerAudioContext = wx.createInnerAudioContext(); 
+const innerAudioContext = wx.createInnerAudioContext();
 
 Page({
   data: {
     clickFlag: false, //开始番茄的标识，防止重复点击
+    repeatFlag: false, //本次计时完成标识,用来控制是否继续或重置
     countTime: "", //番茄倒计时
     aim: null,
     defaultAim: "让我们开始专注一个番茄钟吧",
     timeLong: 25, //番茄时长（单位：分钟）
+    defaultTimeLong: 25, //默认番茄时长
     count: 0, // 设置 计数器 初始为0
     countTimer: null, // 设置 定时器 初始为null
-    mp3CloudId: "cloud://test-b8c946.7465-test-b8c946/audio/d.mp3",//番茄计时结束提示音云id
+    mp3CloudId: "cloud://test-b8c946.7465-test-b8c946/audio/d.mp3", //番茄计时结束提示音云id
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
+
   onLoad: function() {
     //初始化云平台
     wx.cloud.init({
@@ -63,6 +60,7 @@ Page({
     ctx.stroke(); //对当前路径进行描边
     ctx.draw();
   },
+
   drawCircle: function(step) {
     var context = wx.createCanvasContext('canvasProgress');
     // 设置渐变
@@ -81,14 +79,17 @@ Page({
     context.stroke();
     context.draw()
   },
+
   onReady: function() {
     this.drawProgressbg();
   },
+
   //开始番茄计时
   startFanQie: function() {
     var self = this;
 
     if (self.data.clickFlag == false) {
+      //防止重复点击
       self.setData({
         clickFlag: true,
       });
@@ -104,36 +105,7 @@ Page({
         var m = Math.floor((diff_time / 60 % 60));
         var s = Math.floor((diff_time % 60));
         console.log("diff_time : " + diff_time);
-        if (diff_time <= 0) {
-          //播放停止提示音
-          innerAudioContext.play();
-
-          //重置画布
-          var ctx = wx.createCanvasContext('canvasProgress');
-          ctx.setLineWidth(4); 
-          ctx.setStrokeStyle('#DCDCDC'); 
-          ctx.setLineCap('round');
-          ctx.beginPath(); 
-          ctx.arc(110, 110, 100, 0, 2 * Math.PI, false);
-          ctx.stroke(); 
-          ctx.draw();
-
-          //重置相关数据
-          self.setData({
-            defaultAim: "让我们开始专注一个番茄钟吧",
-            aim: null,
-            countTime: "00:00",
-            count: 0
-          });
-
-          //停止计时
-          clearInterval(self.data.countTimer);
-
-          self.setData({
-            clickFlag: false,
-            countTime: "",
-          });
-        } else {
+        if (diff_time >= 0) {
           if (m < 10) {
             m = "0" + m;
           }
@@ -150,12 +122,24 @@ Page({
           console.log("count : " + self.data.count);
           console.log("seconds : " + seconds);
           this.drawCircle(self.data.count / (seconds / 2));
+
+          if (diff_time == 0) {
+            //播放停止提示音
+            innerAudioContext.play();
+
+            //设置本次计时完成标识
+            self.setData({
+              repeatFlag: true,
+            });
+
+            //停止计时
+            clearInterval(self.data.countTimer);
+          }
         }
       }, 1000)
     }
-
-
   },
+
   //输入完目标，失去焦点触发
   onBlur: function(e) {
     var self = this;
@@ -176,6 +160,7 @@ Page({
       timeLong: e.detail.value
     });
   },
+
   //放弃专注
   fangqi() {
     var self = this;
@@ -208,7 +193,7 @@ Page({
             aim: null,
             countTime: "00:00",
             count: 0,
-            timeLong: 25,
+            timeLong: self.data.defaultTimeLong,
             clickFlag: false,
             countTimer: null
           });
@@ -216,6 +201,55 @@ Page({
           console.log('取消放弃')
         }
       }
+    });
+  },
+
+  //继续
+  continueFanqie() {
+    var self = this;
+    //重置画布
+    var ctx = wx.createCanvasContext('canvasProgress');
+    ctx.setLineWidth(4);
+    ctx.setStrokeStyle('#DCDCDC');
+    ctx.setLineCap('round');
+    ctx.beginPath();
+    ctx.arc(110, 110, 100, 0, 2 * Math.PI, false);
+    ctx.stroke();
+    ctx.draw();
+
+    //重置相关数据
+    self.setData({
+      clickFlag: false,
+      countTime: "",
+      count: 0,
+    });
+
+    this.startFanQie();
+  },
+
+  //重置
+  resetFanqie() {
+    var self = this;
+
+    //重置画布
+    var ctx = wx.createCanvasContext('canvasProgress');
+    ctx.setLineWidth(4);
+    ctx.setStrokeStyle('#DCDCDC');
+    ctx.setLineCap('round');
+    ctx.beginPath();
+    ctx.arc(110, 110, 100, 0, 2 * Math.PI, false);
+    ctx.stroke();
+    ctx.draw();
+
+    //重置相关数据
+    self.setData({
+      repeatFlag: false,
+      clickFlag: false,
+      defaultAim: "让我们开始专注一个番茄钟吧",
+      aim: null,
+      timeLong: self.data.defaultTimeLong,
+      countTime: "",
+      count: 0
     });
   }
 })
