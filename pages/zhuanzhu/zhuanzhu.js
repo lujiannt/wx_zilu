@@ -17,12 +17,14 @@ Page({
     count: 0, // 设置 计数器 初始为0
     countTimer: null, // 设置 定时器 初始为null
     mp3CloudId: "cloud://test-b8c946.7465-test-b8c946/audio/d.mp3", //番茄计时结束提示音云id
+    containerHeight: "750"//容器高度
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function() {
+    var self = this;
     //初始化云平台
     wx.cloud.init({
       env: 'test-b8c946'
@@ -50,7 +52,20 @@ Page({
       console.log('play error');
       console.log(res.errMsg)
       console.log(res.errCode)
-    })
+    });
+
+    //获取系统信息,获得高度
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res);
+        // 可使用窗口宽度、高度
+        console.log('height=' + res.windowHeight);
+        console.log('width=' + res.windowWidth);
+        self.setData({
+          containerHeight: res.windowHeight
+        })
+      }
+    });
   },
 
   /**

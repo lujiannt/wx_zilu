@@ -1,40 +1,42 @@
-<view class="page">
-  <!-- 目标/鼓励语 -->
-  <view class="page__hd">
-    <view class="page__title textCenter">{{defaultAim}}</view>
-    <view class="page__desc textCenter">{{defaultEncourage}}</view>
-  </view>
+<view class="page myContainer" style="height:{{containerHeight}}px">
+    <!-- 目标/鼓励语 -->
+    <view class="page__hd">
+      <view class="page__title textCenter">{{defaultAim}}</view>
+      <view class="page__desc textCenter">{{defaultEncourage}}</view>
+    </view>
 
-  <view class="page__bd page__bd_spacing">
-    <!-- 番茄倒计时 -->
-    <view class="timeView">
-      <canvas class="progress_bg" canvas-id="canvasProgressbg"></canvas>
-      <canvas class="progress_canvas" canvas-id="canvasProgress" wx:show="{{clickFlag == true}}"> </canvas>
-      <view class="progress_text">
-        <view class="progress_dot"></view>
-        <text class='progress_info' wx:if="{{clickFlag == true}}">{{countTime}}</text>
+    <view class="page__bd page__bd_spacing">
 
-        <wxc-input wx:if="{{clickFlag != true}}" type="text" mode="normal" style="font-size:16px;text-align: center" placeholder-style="font-size:16px;text-align: center" placeholder="输入本次专注的目标" bind:blur="onBlur" value="{{aim}}" />
+      <!-- 番茄倒计时 -->
+      <view class="timeView">
+        <canvas class="progress_bg" canvas-id="canvasProgressbg"></canvas>
+        <canvas class="progress_canvas" canvas-id="canvasProgress" wx:show="{{clickFlag == true}}"> </canvas>
+        <view class="progress_text">
+          <view class="progress_dot"></view>
+          <text class='progress_info' wx:if="{{clickFlag == true}}">{{countTime}}</text>
+
+          <wxc-input wx:if="{{clickFlag != true}}" type="text" mode="normal" style="font-size:16px;text-align: center" placeholder-style="font-size:16px;text-align: center" placeholder="输入本次专注的目标" bind:blur="onBlur" value="{{aim}}" />
+        </view>
+      </view>
+
+      <!-- 番茄时长slider -->
+      <view class="page__desc mini_title" wx:if="{{clickFlag != true}}">设置时长：{{timeLong}}分钟</view>
+      <view class="body-view textCenter">
+        <slider wx:if="{{clickFlag != true}}" show-value value="{{timeLong}}" step="5" min="0.1" max="60" block-color="#fa8072" activeColor="#fa8072" bindchange="changeTimeLong" />
+      </view>
+
+
+      <!-- 开始与放弃 -->
+      <view class="button-sp-area" wx:if="{{repeatFlag == false}}">
+        <button wx:if="{{clickFlag != true}}" class="btn1" hover-class='hover_btn1' bindtap='startFanQie'>开始</button>
+        <button wx:if="{{clickFlag == true}}" class="btn2" hover-class='hover_btn2' bindtap='fangqi'>放弃</button>
+      </view>
+
+      <!-- 继续与重置 -->
+      <view class="button-sp-area" wx:if="{{repeatFlag == true}}">
+        <button class="btn2" hover-class='hover_btn1' bindtap='resetFanqie' style='float:left;margin-left:4px;width:42%'>重置</button>
+        <button class="btn1" hover-class='hover_btn1' bindtap='continueFanqie' style='float:right;margin-right:4px;width:42%'>继续</button>
       </view>
     </view>
 
-    <!-- 番茄时长slider -->
-    <view class="page__desc mini_title" wx:if="{{clickFlag != true}}">设置时长分钟：</view>
-    <view class="body-view textCenter">
-      <slider wx:if="{{clickFlag != true}}" show-value value="{{timeLong}}" step="5" min="0.1" max="60" block-color="#fa8072" activeColor="#fa8072" bindchange="changeTimeLong" />
-    </view>
-
-
-    <!-- 开始与放弃 -->
-    <view class="button-sp-area" wx:if="{{repeatFlag == false}}">
-      <button wx:if="{{clickFlag != true}}" class="btn1" hover-class='hover_btn1' bindtap='startFanQie'>开始</button>
-      <button wx:if="{{clickFlag == true}}" class="btn2" hover-class='hover_btn2' bindtap='fangqi'>放弃</button>
-    </view>
-
-    <!-- 继续与重置 -->
-    <view class="button-sp-area" wx:if="{{repeatFlag == true}}">
-      <button class="btn2" hover-class='hover_btn1' bindtap='resetFanqie' style='float:left;margin-left:4px;width:42%'>重置</button>
-      <button class="btn1" hover-class='hover_btn1' bindtap='continueFanqie' style='float:right;margin-right:4px;width:42%'>继续</button>
-    </view>
-  </view>
 </view>

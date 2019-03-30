@@ -114,3 +114,8 @@
 .myinput {
  margin-bottom: 15px;
 }
+
+.myContainer {
+  background-color: #fff;
+}
+
