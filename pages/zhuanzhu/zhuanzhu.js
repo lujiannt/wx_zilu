@@ -22,6 +22,11 @@ Page({
     })
   },
   onLoad: function() {
+    //初始化云平台
+    wx.cloud.init({
+      env: 'test-b8c946'
+    });
+
     //设置不遵循静音开关
     wx.setInnerAudioOption({
       obeyMuteSwitch: false
@@ -100,11 +105,6 @@ Page({
         var s = Math.floor((diff_time % 60));
         console.log("diff_time : " + diff_time);
         if (diff_time <= 0) {
-          //初始化云平台
-          wx.cloud.init({
-            env: 'test-b8c946'
-          });
-
           //播放停止提示音
           innerAudioContext.play();
 
