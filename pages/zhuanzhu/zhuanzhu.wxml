@@ -21,7 +21,7 @@
     <!-- 番茄时长slider -->
     <view class="page__desc mini_title" wx:if="{{clickFlag != true}}">设置时长分钟：</view>
     <view class="body-view textCenter">
-        <slider wx:if="{{clickFlag != true}}" show-value value="25" step="5" min="5" max="60" block-color="#fa8072"        activeColor="#fa8072" bindchange="changeTimeLong"/>
+        <slider wx:if="{{clickFlag != true}}" show-value value="25" step="5" min="0.1" max="60" block-color="#fa8072"        activeColor="#fa8072" bindchange="changeTimeLong"/>
     </view>
 
 

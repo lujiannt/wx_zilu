@@ -1,6 +1,8 @@
 //index.js
 //获取应用实例
-const app = getApp()
+const app = getApp();
+//wx audio音频对象
+const innerAudioContext = wx.createInnerAudioContext(); 
 
 Page({
   data: {
@@ -11,7 +13,7 @@ Page({
     timeLong: 25, //番茄时长（单位：分钟）
     count: 0, // 设置 计数器 初始为0
     countTimer: null, // 设置 定时器 初始为null
-    testImgUrl: null,
+    mp3CloudId: "cloud://test-b8c946.7465-test-b8c946/audio/d.mp3",//番茄计时结束提示音云id
   },
   //事件处理函数
   bindViewTap: function() {
@@ -19,7 +21,30 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function() {},
+  onLoad: function() {
+    //设置不遵循静音开关
+    wx.setInnerAudioOption({
+      obeyMuteSwitch: false
+    })
+
+    //设置音频路径
+    //【注意】：经过测试如果不在onload中赋予src,而是在下面的方法中赋予，play方法无法播放，只能使用autoplay=true来播放，该方式有巨大的延迟
+    innerAudioContext.src = this.data.mp3CloudId;
+    // innerAudioContext.autoplay = true;
+
+    //注册音频播放回调
+    innerAudioContext.onPlay(() => {
+      console.log('play start');
+    });
+    innerAudioContext.onStop(() => {
+      console.log('play stop');
+    })
+    innerAudioContext.onError((res) => {
+      console.log('play error');
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
+  },
   drawProgressbg: function() {
     // 使用 wx.createContext 获取绘图上下文 context
     var ctx = wx.createCanvasContext('canvasProgressbg')
@@ -36,10 +61,6 @@ Page({
     var context = wx.createCanvasContext('canvasProgress');
     // 设置渐变
     var gradient = context.createLinearGradient(200, 100, 100, 200);
-    // gradient.addColorStop("0", "#CD5C5C");
-
-    // gradient.addColorStop("0.5", "#fa8072");
-    // gradient.addColorStop("1.0", "#F08080");
 
     gradient.addColorStop("0", "#fa8072");
     gradient.addColorStop("0.5", "#FF8099");
@@ -54,33 +75,12 @@ Page({
     context.stroke();
     context.draw()
   },
-  //番茄倒计时
-  countInterval: function() {
-    // 设置倒计时 定时器 每1000毫秒执行一次，计数器count+1 
-    this.countTimer = setInterval(() => {
-      if (this.data.count <= 60) {
-        /* 绘制彩色圆环进度条  
-        注意此处 传参 step 取值范围是0到2，
-        所以 计数器 最大值 60 对应 2 做处理，计数器count=60的时候step=2
-        */
-        this.drawCircle(this.data.count / (60 / 2))
-        this.data.count++;
-      } else {
-        clearInterval(this.countTimer);
-      }
-    }, 1000)
-  },
   onReady: function() {
     this.drawProgressbg();
-    // this.drawCircle(2) 
-    // this.countInterval()
   },
   //开始番茄计时
   startFanQie: function() {
     var self = this;
-    
-   
-
 
     if (self.data.clickFlag == false) {
       self.setData({
@@ -105,17 +105,8 @@ Page({
           });
 
           //播放停止提示音
-          const innerAudioContext = wx.createInnerAudioContext();
-          innerAudioContext.src = "cloud://test-b8c946.7465-test-b8c946/audio/d.mp3";
-          innerAudioContext.autoplay = true;
+          
           innerAudioContext.play();
-          innerAudioContext.onPlay(() => {
-            console.log('开始播放')
-          })
-          innerAudioContext.onError((res) => {
-            console.log(res.errMsg)
-            console.log(res.errCode)
-          })
 
           //重置画布
           var ctx = wx.createCanvasContext('canvasProgress');
@@ -140,7 +131,7 @@ Page({
 
           self.setData({
             clickFlag: false,
-            countTime: null,
+            countTime: "",
           });
         } else {
           if (m < 10) {
