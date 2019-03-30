@@ -209,7 +209,7 @@ Page({
 
           //重置变量
           self.setData({
-            defaultAim: "让我们开始专注一个番茄钟吧",
+            defaultAim: "专注",
             aim: null,
             countTime: "00:00",
             count: 0,
@@ -269,7 +269,7 @@ Page({
     self.setData({
       repeatFlag: false,
       clickFlag: false,
-      defaultAim: "让我们开始专注一个番茄钟吧",
+      defaultAim: "专注",
       aim: null,
       timeLong: self.data.defaultTimeLong,
       countTime: "",
